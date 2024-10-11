@@ -1,4 +1,4 @@
-# FiveM Docker Server 🦺
+# FiveM Docker Server (BROKEN CONFIG) 🦺
 
 This image provides a FiveM/txAdmin server and capabilities for database for qbcore. After the first startup, it downloads the defined version from the CFX servers. If there is an update to the server files, simply recreate the container without having to redownload the image again. Everything will be downloaded again (only new) and you can continue.
 ## Content🧾
@@ -19,10 +19,25 @@ docker build -t fivem-server .
 ```
 4. Create docker-compose.yml file after you have build image successfully.
 ```bash
+docker run -d \
+  --name fivem-server \
+  -p 40120:40120 \
+  -p 30120:30120 \
+  -p 30110:30110 \
+  -e MYSQL_HOST="your_sql_ip" \
+  -e MYSQL_USER="your_user" \
+  -e MYSQL_PASSWORD="your_password" \
+  -e MYSQL_DATABASE="qbcore" \
+  -e TZ="Europe/Helsinki" \
+  -v ./data:/opt/fivem/resources \
+  fivem-server
+
+
+
 services:
   mariadb:
     image: mariadb:latest
-    container_name: fivem-mariadb
+    container_name: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root  # Change this to a strong password
       MYSQL_DATABASE: qbcore                # Name of the database for QBCore

@@ -34,4 +34,5 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 exec $SCRIPTPATH/alpine/opt/cfx-server/ld-musl-x86_64.so.1 \
 --library-path "$SCRIPTPATH/alpine/usr/lib/v8/:$SCRIPTPATH/alpine/lib/:$SCRIPTPATH/alpine/usr/lib/" -- \
-$SCRIPTPATH/alpine/opt/cfx-server/FXServer +set mysql_connection_string "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/$>exit
+$SCRIPTPATH/alpine/opt/cfx-server/FXServer +set mysql_connection_string "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DATABASE}" +set citizen_dir $SCRIPTPATH/alpine/opt/cfx-server/citizen/ $*
+exit
