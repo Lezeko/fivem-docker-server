@@ -22,7 +22,7 @@ docker build -t fivem-server .
 services:
   mariadb:
     image: mariadb:latest
-    container_name: mariadb-container
+    container_name: fivem-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root  # Change this to a strong password
       MYSQL_DATABASE: qbcore                # Name of the database for QBCore
@@ -32,35 +32,8 @@ services:
       - "3306:3306"
     volumes:
       - mariadb_data:/var/lib/mysql  # Persistent data storage
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
-      interval: 10s   # Check every 10 seconds
-      timeout: 5s     # Timeout after 5 seconds
-      retries: 5      # Retry 5 times
-
-  fivem:
-    image: fivem-server
-    container_name: fivem-server
-    network_mode: "host"  # Use host networking
-    depends_on:
-      mariadb:
-        condition: service_healthy  # Wait for the health check to pass
-    environment:
-      MYSQL_HOST: mariadb           # Hostname of the MariaDB container
-      MYSQL_USER: qbcuser           # User for the database
-      MYSQL_PASSWORD: qbcore   # User's password
-      MYSQL_DATABASE: qbcore         # Database name
-      TZ: Europe/Helsinki              # Set your desired timezone
-    ports:
-      - "40120:40120"
-      - "30120:30120"
-      - "30110:30110"
-    volumes:
-      - ./data:/opt/fivem/resources  # Local directory for FiveM resources
-
 volumes:
   mariadb_data:  # Volume for MariaDB data persistence
-
 ```
 Please replace all things needed.
 
