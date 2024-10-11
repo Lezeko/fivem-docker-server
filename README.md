@@ -12,7 +12,7 @@ This image provides a FiveM/txAdmin server and capabilities for database for qbc
 How to install this Docker Container
 
 1. Have docker and docker compose installed and running.
-2. Clone this repo and add your prefered versions in `Dockerfile`.
+2. Clone this repo and edit/add versions in `Dockerfile`.
 3. Build docker image using this command
 ```bash
 docker build -t fivem-server .
@@ -24,27 +24,33 @@ services:
     image: mariadb:latest
     container_name: mariadb-container
     environment:
-      MYSQL_ROOT_PASSWORD: root_password  # Change this to a strong password
+      MYSQL_ROOT_PASSWORD: root  # Change this to a strong password
       MYSQL_DATABASE: qbcore                # Name of the database for QBCore
       MYSQL_USER: qbcuser                   # Create a user for QBCore
-      MYSQL_PASSWORD: user_password          # User's password
+      MYSQL_PASSWORD: qbcore          # User's password
     ports:
       - "3306:3306"
     volumes:
       - mariadb_data:/var/lib/mysql  # Persistent data storage
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s   # Check every 10 seconds
+      timeout: 5s     # Timeout after 5 seconds
+      retries: 5      # Retry 5 times
 
   fivem:
-    image: fivem-server  # Replace with your FiveM image name
+    image: fivem-server
     container_name: fivem-server
     network_mode: "host"  # Use host networking
     depends_on:
-      - mariadb  # Ensure that mariadb starts before fivem-server
+      mariadb:
+        condition: service_healthy  # Wait for the health check to pass
     environment:
       MYSQL_HOST: mariadb           # Hostname of the MariaDB container
       MYSQL_USER: qbcuser           # User for the database
-      MYSQL_PASSWORD: user_password   # User's password
+      MYSQL_PASSWORD: qbcore   # User's password
       MYSQL_DATABASE: qbcore         # Database name
-      TZ: Europe/Berlin              # Set your desired timezone
+      TZ: Europe/Helsinki              # Set your desired timezone
     ports:
       - "40120:40120"
       - "30120:30120"
@@ -78,11 +84,11 @@ docker compose up -d
 
 Here is the FiveM download link:
 
-**Full URL**: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/6622-d24291cd0e6119311f5b410be6167f6ccdc3e62d/fx.tar.xz
+**Full URL**: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/10272-72c2081fecb02cee2db0fa40a3977f134fb3d3fc/fx.tar.xz
 
 **Base URL**: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/
 
-**Version Code**: **6622-d24291cd0e6119311f5b410be6167f6ccdc3e62d**
+**Version Code**: **10272-72c2081fecb02cee2db0fa40a3977f134fb3d3fc**
 
 
 All versions can be found [->HERE](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/)<br>
