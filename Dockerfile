@@ -7,6 +7,7 @@ ENV txadmin_version="REPLACE_WITH_TXADMIN_VERSION"
 EXPOSE 40120
 EXPOSE 30120
 EXPOSE 30110
+EXPOSE 3306
 
 COPY ./startup.sh /opt/fivem/startup.sh
 

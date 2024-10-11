@@ -37,6 +37,8 @@ services:
     image: fivem-server  # Replace with your FiveM image name
     container_name: fivem-server
     network_mode: "host"  # Use host networking
+    depends_on:
+      - mariadb  # Ensure that mariadb starts before fivem-server
     environment:
       MYSQL_HOST: mariadb           # Hostname of the MariaDB container
       MYSQL_USER: qbcuser           # User for the database
@@ -56,12 +58,17 @@ volumes:
 ```
 Please replace all things needed.
 
-4. After all data has been downloaded, the txAdmin server will start.
+4. Start docker container
+```bash
+docker compose up -d
+```
 
-5. Now the txAdmin server must be set up. This is done via the web interface provided by FiveM.<br>
+5. After all data has been downloaded, the txAdmin server will start.
+
+6. Now the txAdmin server must be set up. This is done via the web interface provided by FiveM.<br>
    [[Here]](https://docs.fivem.net/docs/server-manual/setting-up-a-server-txadmin/#start-the-server) you can read from point 2 on, how to set up txAdmin. (The PIN can be found in the server console)
 
-6. After that the FiveM server will be started and you can play.
+7. After that the FiveM server will be started and you can play.
 
 <br>
 

@@ -22,7 +22,7 @@ if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
   echo "***Downloading txAdmin Version $txadmin_version"
   wget https://github.com/tabarra/txAdmin/archive/refs/tags/v$txadmin_version.zip
   unzip v$txadmin_version.zip -d /opt/fivem/txAdmin
-  rm txAdmin.zip
+  rm v$txadmin_version.zip
 
   touch $CONTAINER_ALREADY_STARTED
 fi
