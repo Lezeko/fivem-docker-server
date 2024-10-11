@@ -26,6 +26,7 @@ docker run -d \
   -e MYSQL_PASSWORD="your_mysql_password" \
   -e MYSQL_DATABASE="qbcore" \
   -e TZ="Europe/Berlin" \  # Set the timezone here
+  -v /path/to/your/local/directory:/opt/fivem/resources \  # Mount local directory to resources folder
   your_fivem_image_name
 ```
 Please replace all things written in CAPS.
