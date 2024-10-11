@@ -3,29 +3,38 @@
 This image provides a FiveM/txAdmin server. After the first startup, it downloads the defined version from the CFX servers. If there is an update to the server files, simply recreate the container without having to redownload the image again. Everything will be downloaded again (only new) and you can continue.
 ## Content🧾
 
-* [Deployment👩‍💻](https://github.com/Auhrus/fivem-docker-server?tab=readme-ov-file#deployment)
-* [Environment Variables🔢](https://github.com/Auhrus/fivem-docker-server?tab=readme-ov-file#environment-variables)
-* [Update/Downgrade⏫](https://github.com/Auhrus/fivem-docker-server?tab=readme-ov-file#up-downgrade)
-* [Support❤️](https://github.com/Auhrus/fivem-docker-server?tab=readme-ov-file#support%EF%B8%8F)
+* [Deployment👩‍💻](https://github.com/Lezeko/fivem-docker-server?tab=readme-ov-file#deployment)
+* [Environment Variables🔢](https://github.com/Lezeko/fivem-docker-server?tab=readme-ov-file#environment-variables)
+* [Update/Downgrade⏫](https://github.com/Lezeko/fivem-docker-server?tab=readme-ov-file#up-downgrade)
 
 
 ## Deployment👩‍💻
 
 How to install this Docker Container
 
-1. Install Docker on your Server. [[Here]](https://duckduckgo.com/?t=ffab&q=How+to+install+Docker+on+Ubuntu) you can find a guide.
-2. Run that command
+1. Clone this Github repo.
+2. Install and run database container.
+3. Run that command
 ```bash
-docker run -d -t --name CONAINER_NAME -p 40120:40120/tcp -p 30120:30120/tcp -p 30120:30120/udp -e download=VERSION -v VOLUME_NAME:/opt/fivem/txData ghcr.io/auhrus/fivem:latest
+docker run -d \
+  --name your_fivem_container_name \
+  -p 40120:40120 \
+  -p 30120:30120 \
+  -p 30110:30110 \
+  -e MYSQL_HOST="your_mysql_host" \
+  -e MYSQL_USER="your_mysql_user" \
+  -e MYSQL_PASSWORD="your_mysql_password" \
+  -e MYSQL_DATABASE="qbcore" \
+  your_fivem_image_name
 ```
 Please replace all things written in CAPS.
 
-3. After all data has been downloaded, the txAdmin server will start.
+4. After all data has been downloaded, the txAdmin server will start.
 
-4. Now the txAdmin server must be set up. This is done via the web interface provided by FiveM.<br>
+5. Now the txAdmin server must be set up. This is done via the web interface provided by FiveM.<br>
    [[Here]](https://docs.fivem.net/docs/server-manual/setting-up-a-server-txadmin/#start-the-server) you can read from point 2 on, how to set up txAdmin. (The PIN can be found in the server console)
 
-5. After that the FiveM server will be started and you can play.
+6. After that the FiveM server will be started and you can play.
 
 
 ## Environment Variables🔢
@@ -81,9 +90,3 @@ docker stop CONAINER_NAME && docker rm CONAINER_NAME
 2. Then create him again like in the [Deployment👩‍💻](https://github.com/Auhrus/fivem-docker-server?tab=readme-ov-file#deployment) with the same Volumes.
 
 **Please note** that downgrading may cause compatibility problems e.g. with the txAdmin database.
-
-
-## Support❤️
-
-If you find any bugs have improvements for this Documentation or have any other suggestions/improvements, please post a bug report or feature suggestion in the 
-[Issues Tab](https://github.com/Auhrus/fivem-docker-server/issues).
