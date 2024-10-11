@@ -16,11 +16,13 @@ fi
 CONTAINER_ALREADY_STARTED="CONTAINER_ALREADY_STARTED_PLACEHOLDER"
 if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
   echo "***Downloading FiveM Server Version $fivem_version"
-  wget -O- https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$fivem_version | tar -xJ -C /opt/fivem
+  wget -O- https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$fivem_version/fx.tar.xz | tar -xJ -C /opt/fivem
 
   # Download and install txAdmin
   echo "***Downloading txAdmin Version $txadmin_version"
-  wget -O- https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$txadmin_version | tar -xJ -C /opt/fivem
+  wget https://github.com/tabarra/txAdmin/archive/refs/tags/v$txadmin_version.zip
+  unzip v$txadmin_version.zip -d /opt/fivem/txAdmin
+  rm txAdmin.zip
 
   touch $CONTAINER_ALREADY_STARTED
 fi
@@ -32,5 +34,4 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 exec $SCRIPTPATH/alpine/opt/cfx-server/ld-musl-x86_64.so.1 \
 --library-path "$SCRIPTPATH/alpine/usr/lib/v8/:$SCRIPTPATH/alpine/lib/:$SCRIPTPATH/alpine/usr/lib/" -- \
-$SCRIPTPATH/alpine/opt/cfx-server/FXServer +set mysql_connection_string "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DATABASE}" +set citizen_dir $SCRIPTPATH/alpine/opt/cfx-server/citizen/ $*
-exit
+$SCRIPTPATH/alpine/opt/cfx-server/FXServer +set mysql_connection_string "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/$>exit

@@ -1,10 +1,9 @@
 # FiveM Docker Server 🦺
 
-This image provides a FiveM/txAdmin server. After the first startup, it downloads the defined version from the CFX servers. If there is an update to the server files, simply recreate the container without having to redownload the image again. Everything will be downloaded again (only new) and you can continue.
+This image provides a FiveM/txAdmin server and capabilities for database for qbcore. After the first startup, it downloads the defined version from the CFX servers. If there is an update to the server files, simply recreate the container without having to redownload the image again. Everything will be downloaded again (only new) and you can continue.
 ## Content🧾
 
 * [Deployment👩‍💻](https://github.com/Lezeko/fivem-docker-server?tab=readme-ov-file#deployment)
-* [Environment Variables🔢](https://github.com/Lezeko/fivem-docker-server?tab=readme-ov-file#environment-variables)
 * [Update/Downgrade⏫](https://github.com/Lezeko/fivem-docker-server?tab=readme-ov-file#up-downgrade)
 
 
@@ -12,24 +11,49 @@ This image provides a FiveM/txAdmin server. After the first startup, it download
 
 How to install this Docker Container
 
-1. Clone this Github repo.
-2. Install and run database (in container?) and create qbcore table.
-3. Run that command
+1. Have docker and docker compose installed and running.
+2. Clone this repo.
+3. Build docker image
 ```bash
-docker run -d \
-  --name your_fivem_container_name \
-  -p 40120:40120 \
-  -p 30120:30120 \
-  -p 30110:30110 \
-  -e MYSQL_HOST="your_mysql_host" \
-  -e MYSQL_USER="your_mysql_user" \
-  -e MYSQL_PASSWORD="your_mysql_password" \
-  -e MYSQL_DATABASE="qbcore" \
-  -e TZ="Europe/Berlin" \  # Set the timezone here
-  -v /path/to/your/local/directory:/opt/fivem/resources \  # Mount local directory to resources folder
-  your_fivem_image_name
+docker build -t fivem-server .
 ```
-Please replace all things written in CAPS.
+4. Create docker-compose.yml file.
+```bash
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  # Change this to a strong password
+      MYSQL_DATABASE: qbcore                # Name of the database for QBCore
+      MYSQL_USER: qbcuser                   # Create a user for QBCore
+      MYSQL_PASSWORD: user_password          # User's password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql  # Persistent data storage
+
+  fivem:
+    image: your_fivem_image_name  # Replace with your FiveM image name
+    container_name: fivem-container
+    environment:
+      MYSQL_HOST: mariadb           # Hostname of the MariaDB container
+      MYSQL_USER: qbcuser           # User for the database
+      MYSQL_PASSWORD: user_password   # User's password
+      MYSQL_DATABASE: qbcore         # Database name
+      TZ: Europe/Berlin              # Set your desired timezone
+    ports:
+      - "40120:40120"
+      - "30120:30120"
+      - "30110:30110"
+    volumes:
+      - ./resources:/opt/fivem/resources  # Local directory for FiveM resources
+
+volumes:
+  mariadb_data:  # Volume for MariaDB data persistence
+
+```
+Please replace all things needed.
 
 4. After all data has been downloaded, the txAdmin server will start.
 
@@ -39,27 +63,9 @@ Please replace all things written in CAPS.
 6. After that the FiveM server will be started and you can play.
 
 
-## Environment Variables🔢
-
-To run this container, you will need to set the following environment variables.
-
-| Variable      | Function      | Default |
-|:-------------:|:-------------:|:-------------|
-| `download`    |With this variable you can determine which version of the FiveM server will be downloaded.<br>Below you will find a more detailed description of this variable.|recommended|
-| `PATH`    |You can ignore this, it will be created automatically by the Alpine base.|/usr/local/sbin:/usr/local/bin:<br>/usr/sbin:/usr/bin:/sbin:/bin|
-| `TZ`    |This can be used to set the time zone within the container. Enter a [TZ identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for this. When unset its UTC time.|--|
-
 
 #### Detailed description of the `download` variable
-There are 3 ways to use the variable.<br>
-1. Set it to 'recommended'<br>
-	In that case, the version that can be downloaded at the time of container creation via the "Latest Recommended" button. Seen in the picture below.<br>
- 
-2. Set it to 'optional'<br>
-	In that case, the version that can be downloaded at the time of container creation via the "Latest Optional" button. Seen in the picture below.<br>
- 
-3. or insert a link of the desired version<br>
-   	If you need a specific version of the server, you can also insert the direct link to the desired version file. The link will look like this e.g.<br>
+1. Insert a link's version version code<br>
     
 ```html
 https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/6622-d24291cd0e6119311f5b410be6167f6ccdc3e62d/fx.tar.xz

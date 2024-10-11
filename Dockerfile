@@ -7,7 +7,6 @@ ENV txadmin_version="REPLACE_WITH_TXADMIN_VERSION"
 EXPOSE 40120
 EXPOSE 30120
 EXPOSE 30110
-EXPOSE 3306  # MySQL port
 
 COPY ./startup.sh /opt/fivem/startup.sh
 
