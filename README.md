@@ -12,12 +12,12 @@ This image provides a FiveM/txAdmin server and capabilities for database for qbc
 How to install this Docker Container
 
 1. Have docker and docker compose installed and running.
-2. Clone this repo.
-3. Build docker image
+2. Clone this repo and add your prefered versions in `Dockerfile`.
+3. Build docker image using this command
 ```bash
 docker build -t fivem-server .
 ```
-4. Create docker-compose.yml file.
+4. Create docker-compose.yml file after you have build image successfully.
 ```bash
 services:
   mariadb:
@@ -47,7 +47,7 @@ services:
       - "30120:30120"
       - "30110:30110"
     volumes:
-      - ./resources:/opt/fivem/resources  # Local directory for FiveM resources
+      - ./data:/opt/fivem/resources  # Local directory for FiveM resources
 
 volumes:
   mariadb_data:  # Volume for MariaDB data persistence
@@ -62,14 +62,21 @@ Please replace all things needed.
 
 6. After that the FiveM server will be started and you can play.
 
+<br>
 
-
-#### Detailed description of the `download` variable
+#### Detailed description of the `Dockerfile` versions
 1. Insert a link's version version code<br>
     
-```html
-https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/6622-d24291cd0e6119311f5b410be6167f6ccdc3e62d/fx.tar.xz
-```
+
+Here is the FiveM download link:
+
+**Full URL**: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/6622-d24291cd0e6119311f5b410be6167f6ccdc3e62d/fx.tar.xz
+
+**Base URL**: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/
+
+**Version Code**: **6622-d24291cd0e6119311f5b410be6167f6ccdc3e62d**
+
+
 All versions can be found [->HERE](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/)<br>
  
 ![image](https://github.com/Auhrus/fivem-docker-server/assets/57270834/8752e275-54ca-4ba7-a141-473bc0be4d70 "CFX artifacts")
