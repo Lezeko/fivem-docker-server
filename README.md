@@ -34,8 +34,8 @@ services:
       - mariadb_data:/var/lib/mysql  # Persistent data storage
 
   fivem:
-    image: your_fivem_image_name  # Replace with your FiveM image name
-    container_name: fivem-container
+    image: fivem-server  # Replace with your FiveM image name
+    container_name: fivem-server
     environment:
       MYSQL_HOST: mariadb           # Hostname of the MariaDB container
       MYSQL_USER: qbcuser           # User for the database
