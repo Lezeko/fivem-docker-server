@@ -25,6 +25,7 @@ docker run -d \
   -e MYSQL_USER="your_mysql_user" \
   -e MYSQL_PASSWORD="your_mysql_password" \
   -e MYSQL_DATABASE="qbcore" \
+  -e TZ="Europe/Berlin" \  # Set the timezone here
   your_fivem_image_name
 ```
 Please replace all things written in CAPS.
