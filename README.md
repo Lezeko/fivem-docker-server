@@ -13,7 +13,7 @@ This image provides a FiveM/txAdmin server. After the first startup, it download
 How to install this Docker Container
 
 1. Clone this Github repo.
-2. Install and run database container.
+2. Install and run database (in container?) and create qbcore table.
 3. Run that command
 ```bash
 docker run -d \
