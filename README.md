@@ -36,6 +36,7 @@ services:
   fivem:
     image: fivem-server  # Replace with your FiveM image name
     container_name: fivem-server
+    network_mode: "host"  # Use host networking
     environment:
       MYSQL_HOST: mariadb           # Hostname of the MariaDB container
       MYSQL_USER: qbcuser           # User for the database
