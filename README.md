@@ -1,6 +1,6 @@
-# FiveM Docker Server (BROKEN CONFIG) 🦺
+# FiveM Docker Server with MariaDB 🦺
 
-This image provides a FiveM/txAdmin server and capabilities for database for qbcore. After the first startup, it downloads the defined version from the CFX servers. If there is an update to the server files, simply recreate the container without having to redownload the image again. Everything will be downloaded again (only new) and you can continue.
+This image provides a FiveM/txAdmin server and database for qbcore/esx. After the first startup, it downloads the defined version from the CFX servers. If there is an update to the server files, simply recreate the container without having to redownload the image again. Everything will be downloaded again (only new) and you can continue.
 
 
 ## Deployment👩‍💻
