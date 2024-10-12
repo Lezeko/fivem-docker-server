@@ -21,10 +21,10 @@ services:
     image: mariadb:latest
     container_name: fivem-mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: your_root_password  # Change this to a strong password
-      MYSQL_DATABASE: qbcore                # Name of the database for QBCore
-      MYSQL_USER: your_mysql_user                   # Create a user for QBCore
-      MYSQL_PASSWORD: your_mysql_password          # User's password
+      MYSQL_ROOT_PASSWORD: your_root_password   # Change this to a strong password
+      MYSQL_DATABASE: qbcore                    # Name of the database for QBCore
+      MYSQL_USER: your_mysql_user               # Create a user for QBCore
+      MYSQL_PASSWORD: your_mysql_password       # User's password
     ports:
       - "3306:3306"
     volumes:
@@ -40,11 +40,11 @@ services:
             - "30120:30120/tcp"
             - 30110:30110
         environment:
-            - MYSQL_HOST=your_sql_ip # Change this to your SQL server IP
-            - MYSQL_USER=your_user # Change this to your SQL user
-            - MYSQL_PASSWORD=your_password # Change this to your SQL password
-            - MYSQL_DATABASE=qbcore 
-            - TZ=Europe/Helsinki # Change this to your timezone
+            - MYSQL_HOST=your_mysql_ip             # Change this to your SQL server IP
+            - MYSQL_USER=your_mysql_user           # Change this to your SQL user
+            - MYSQL_PASSWORD=your_mysql_password   # Change this to your SQL password
+            - MYSQL_DATABASE=qbcore                # Name of the database for QBCore
+            - TZ=Europe/Helsinki                   # Change this to your timezone
         volumes:
             - /your/data/location:/opt/fivem/resources # Your folder location
         image: fivem-server
