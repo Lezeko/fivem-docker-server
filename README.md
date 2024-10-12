@@ -32,23 +32,23 @@ services:
     restart: unless-stopped
 
 
-    fivem-server:
-        container_name: fivem-server
-        ports:
-            - 40120:40120
-            - "30120:30120/udp"
-            - "30120:30120/tcp"
-            - 30110:30110
-        environment:
-            - MYSQL_HOST=your_mysql_ip             # Change this to your SQL server IP
-            - MYSQL_USER=your_mysql_user           # Change this to your SQL user
-            - MYSQL_PASSWORD=your_mysql_password   # Change this to your SQL password
-            - MYSQL_DATABASE=qbcore                # Name of the database for QBCore
-            - TZ=Europe/Helsinki                   # Change this to your timezone
-        volumes:
-            - /your/data/location:/opt/fivem/resources # Your folder location
-        image: fivem-server
-        restart: unless-stopped
+  fivem-server:
+    container_name: fivem-server
+    ports:
+        - 40120:40120
+        - "30120:30120/udp"
+        - "30120:30120/tcp"
+        - 30110:30110
+    environment:
+        - MYSQL_HOST=your_mysql_ip             # Change this to your SQL server IP
+        - MYSQL_USER=your_mysql_user           # Change this to your SQL user
+        - MYSQL_PASSWORD=your_mysql_password   # Change this to your SQL password
+        - MYSQL_DATABASE=qbcore                # Name of the database for QBCore
+        - TZ=Europe/Helsinki                   # Change this to your timezone
+    volumes:
+        - /your/data/location:/opt/fivem/resources # Your folder location
+    image: fivem-server
+    restart: unless-stopped
 
 volumes:
   mariadb_data:  # Volume for MariaDB data persistence
